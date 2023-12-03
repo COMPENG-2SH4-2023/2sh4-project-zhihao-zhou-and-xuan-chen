@@ -22,23 +22,32 @@ class GameMechs
         char input;
         bool exitFlag;
         
+        bool loseFlag;//for lose the game
+        int score;//for score
         int boardSizeX;
         int boardSizeY;
-
+        //
+        objPos foodPos;//food position
+        objPosArrayList snake;//??
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
         
         bool getExitFlagStatus();
+        bool getLoseFlagStatus();//lose
         void setExitTrue();
-
+        void setLoseTrue();          
+        
         char getInput();
         void setInput(char this_input);
         void clearInput();
 
         int getBoardSizeX();
-        int getBoardSizeY();
-      
+        int getBoardSizeY();      
+        int getScore();//score
+        void incrementScore();
+
+
 
 };
 
