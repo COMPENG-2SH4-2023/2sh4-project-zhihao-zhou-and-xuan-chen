@@ -10,7 +10,10 @@
 //
 // You must deploy exception throwing for all out-of-bound accesses.
 
-
+bool passed = true;
+int passCount = 0;
+int failCount = 0;
+using namespace std;
 // Test Case 1 - Constructor Tester
 // - Will require you to implement getSize() and getElement() methods.
 void testConstructor()
@@ -26,6 +29,18 @@ void testConstructor()
 	bool expectedCheck = true;
 	bool actualCheck;
 
+
+	if (expectedSize != actualSize) 
+	{
+		cout<<"Fail checking list size"<< endl;
+		failCount++;
+		passed = false;
+	}
+	else
+	{
+		cout<<"List size good"<< endl;
+	}	
+
 	// Then check all elements in the array are zero-initialized via objPos() default constructor
 	for(int i = 0; i < ARRAY_MAX_CAP; i++)
 	{
@@ -33,8 +48,17 @@ void testConstructor()
 		actualCheck = zeroPos.isPosEqual(&currentPos);
 
 		ASSERT_EQUAL(expectedCheck, actualCheck);
-	}
 
+		if (expectedCheck != actualCheck) 
+		{
+			cout<<"Fail checking list size"<< endl;
+			failCount++;
+			passed = false;
+		}
+
+	}
+	cout<<"all elements in the array are zero-initialized via objPos() default constructor"<< endl;
+	passCount++;
 	// The destructor will be called automatically for stack-allocated objects
 }
 
@@ -59,19 +83,46 @@ void testInsertHead_1Element()
 	bool expectedCheck = true;
 	bool actualCheck;
 
+	if (expectedSize != actualSize) 
+	{
+		cout<<"Fail testInsertHead_1Element"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}
+	else
+	{
+		cout<<"testInsertHead_1Element good"<< endl;
+	}	
+
+
 	// Then check whether the head element is what we have inserted.
 	thisList.getHeadElement(currentPos);
 	actualCheck = samplePos.isPosEqual(&currentPos);
 
 	ASSERT_EQUAL(expectedCheck, actualCheck);
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail head 1E"<< endl;
+		failCount++;
+		passed = false;
+		return;
 
+	}
 
 	// Next, check whether the tail element is also the head element in a list of 1 element.
 	thisList.getTailElement(currentPos);
 	actualCheck = samplePos.isPosEqual(&currentPos);
 
 	ASSERT_EQUAL(expectedCheck, actualCheck);
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail tail 1E"<< endl;
+		failCount++;
+		passed = false;
+		return;
 
+	}
 
 	// Finally, chech whether the element at index = 0 is also the head element in a list of 1 element
 	// Then check whether the head element is what we have inserted.
@@ -79,8 +130,16 @@ void testInsertHead_1Element()
 	actualCheck = samplePos.isPosEqual(&currentPos);
 
 	ASSERT_EQUAL(expectedCheck, actualCheck);
-
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail body 1E"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}
 	// The destructor will be called automatically for stack-allocated objects
+	cout<<"Success head body tail 1E"<< endl;
+	passCount++;
 }
 
 // Test Case 2b - insertHead 5 Element 
@@ -104,7 +163,14 @@ void testInsertHead_5Element()
 		
 	// Confirm the list size is now 5
 	ASSERT_EQUAL(expectedSize, actualSize);
+	if (expectedSize != actualSize) 
+	{
+		cout<<"Fail testInsertHead_5Element-size"<< endl;
+		failCount++;
+		passed = false;
+		return;
 
+	}
 	bool expectedCheck = true;
 	bool actualCheck;
 
@@ -114,6 +180,14 @@ void testInsertHead_5Element()
 
 	ASSERT_EQUAL(expectedCheck, actualCheck);
 
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail head unique 5E"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}
+
 	// Next, chech the body elements at index 1, 2, and 3.
 	for(int i = 1; i < actualSize - 1; i++)
 	{
@@ -121,12 +195,27 @@ void testInsertHead_5Element()
 		actualCheck = bodyPos.isPosEqual(&currentPos);
 
 		ASSERT_EQUAL(expectedCheck, actualCheck);	
+		if (expectedCheck != actualCheck) 
+		{
+			cout<<"Fail body 5E"<< endl;
+			failCount++;
+			passed = false;
+			return;
+		}
 	}
 
 	// Finally, check the tail element is the body element
 	thisList.getTailElement(currentPos);
 	actualCheck = bodyPos.isPosEqual(&currentPos);
-
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail tail 5E"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}
+	cout<<"Success head body tail 5E"<< endl;
+	passCount++;
 	ASSERT_EQUAL(expectedCheck, actualCheck);
 
 	// The destructor will be called automatically for stack-allocated objects
@@ -149,21 +238,39 @@ void testInsertTail_1Element()
 		
 	// First check the list size is 1
 	ASSERT_EQUAL(expectedSize, actualSize);
-
+	if (expectedSize != actualSize) 
+	{
+		cout<<"Fail insertTail 1 Element - size "<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}
 	bool expectedCheck = true;
 	bool actualCheck;
 
 	// Then check whether the head element is what we have inserted.
 	thisList.getHeadElement(currentPos);
 	actualCheck = samplePos.isPosEqual(&currentPos);
-
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail insertTail 1 Element - head"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}
 	ASSERT_EQUAL(expectedCheck, actualCheck);
 
 
 	// Next, check whether the tail element is also the head element in a list of 1 element.
 	thisList.getTailElement(currentPos);
 	actualCheck = samplePos.isPosEqual(&currentPos);
-
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail insertTail 1 Element - tail"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}	
 	ASSERT_EQUAL(expectedCheck, actualCheck);
 
 
@@ -171,9 +278,16 @@ void testInsertTail_1Element()
 	// Then check whether the head element is what we have inserted.
 	thisList.getElement(currentPos, 0);
 	actualCheck = samplePos.isPosEqual(&currentPos);
-
+	if (expectedCheck != actualCheck) 
+	{
+		cout<<"Fail insertTail 1 Element - body"<< endl;
+		failCount++;
+		passed = false;
+		return;
+	}	
 	ASSERT_EQUAL(expectedCheck, actualCheck);
-
+	cout<<"Success insert tail 1E"<< endl;
+	passCount++;
 	// The destructor will be called automatically for stack-allocated objects
 }
 
