@@ -1,3 +1,36 @@
+#include "Player.h"
+#include "Food.h"
+#include <iostream>
+
+Player::Player(GameMechs* thisGMRef, Food* thisFood) : exitFlag(false)
+{
+    mainGameMechsRef = thisGMRef;
+    myDir = STOP;
+
+    food = thisFood;
+    playerPosList = new objPosArrayList();
+
+    
+    objPos playerPos;
+    playerPos.x = thisGMRef->getBoardSizeX() / 2;
+    playerPos.y = thisGMRef->getBoardSizeY() / 2;// Initialize * position
+    playerPos.symbol = '*';
+    
+    playerPosList->insertHead(playerPos);// Add the initial position to the player's position list
+}
+
+
+Player::~Player()
+{
+    // delete any heap members here
+    delete playerPosList;
+}
+
+objPosArrayList* Player::getPlayerPos()
+{
+    return playerPosList;
+}
+
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic   
@@ -73,21 +106,26 @@ void Player::movePlayer()
         break;
     }
 
-    // Additional logic to update player position
     objPos newPos;
-    newPos.x = newX;
+    newPos.x = newX;    // Aplayer position
     newPos.y = newY;
 
-    // Wrap around to the opposite side if hitting the border edges
-    if (newX == 0) {
+    if (newX == 0) 
+    {
         newPos.x = mainGameMechsRef->getBoardSizeX() - 2;
-    } else if (newX == mainGameMechsRef->getBoardSizeX() - 1) {
+    } 
+    else if (newX == mainGameMechsRef->getBoardSizeX() - 1)     // go opposite side when edge
+
+    {
         newPos.x = 1;
     }
 
-    if (newY == 0) {
+    if (newY == 0) 
+    {
         newPos.y = mainGameMechsRef->getBoardSizeY() - 2;
-    } else if (newY == mainGameMechsRef->getBoardSizeY() - 1) {
+    } 
+    else if (newY == mainGameMechsRef->getBoardSizeY() - 1) 
+    {
         newPos.y = 1;
     }
     playerPosList->removeTail();
@@ -107,12 +145,14 @@ int Player::checkFoodConsumption()
     objPosArrayList* foodPosList = food->getFoodPos();
 
     // Iterate over all food positions
-    for (int i = 0; i < foodPosList->getSize(); ++i) {
+    for (int i = 0; i < foodPosList->getSize(); ++i) 
+    {
 
         foodPosList->getElement(foodPos, i);
 
         // pos = pos?
-        if (headPos.x == foodPos.x && headPos.y == foodPos.y) {
+        if (headPos.x == foodPos.x && headPos.y == foodPos.y) 
+        {
             // Consume the food
             playerPosList->insertHead(foodPos);
 
@@ -153,20 +193,20 @@ int Player::checkSelfCollision()
     objPos headPos;
     getPlayerPos()->getHeadElement(headPos);
 
-    // Iterate over the rest of the body and check for collision
-    for (int i = 1; i < playerPosList->getSize(); i++) {
+    for (int i = 1; i < playerPosList->getSize(); i++)     //check collision
+
+    {
         objPos bodyPos;
         playerPosList->getElement(bodyPos, i);
 
-        if (headPos.x == bodyPos.x && headPos.y == bodyPos.y) 
+        if (headPos.x == bodyPos.x && headPos.y == bodyPos.y) //head vs each body
         {
             // Collision detected
             return 1;
         }
     }
 
-    // No collision
-    return 0;
+    return 0;// No collision
 }
 
 

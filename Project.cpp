@@ -53,14 +53,15 @@ void Initialize(void)
 
     exitFlag = false;
     loseFlag = false;
-    // Initialize game objects
+
+    // Initial game objects newnewnew deletedelete delete
     myGameMechs = new GameMechs();
     myFood = new Food();
 
-    myPlayer = new Player(myGameMechs, myFood);  // Pass both GameMechs and Food
+    myPlayer = new Player(myGameMechs, myFood);  // Pass Game and Food
 
-    // Generate initial food
-    myFood->generateFood(myPlayer->getPlayerPos());
+    myFood->generateFood(myPlayer->getPlayerPos());    //  food
+
 
     objPosArrayList* tempPlayer = myPlayer->getPlayerPos();
 
@@ -68,7 +69,7 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    if (myGameMechs -> getInput() == ' ')
+    if (myGameMechs -> getInput() == ' ')//kill the games with space
     {
         exitFlag = true;
         myGameMechs -> setExitTrue();
@@ -83,29 +84,29 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    // Check for self-collision
-    if (myPlayer->checkSelfCollision()==1) {
+
+    if (myPlayer->checkSelfCollision()==1)     // Check suicide
+    {
         myGameMechs->setExitTrue();
-        exitFlag = true;
-        // Additional actions to end the game can be added here
+        exitFlag = true; //lose game
     }
 
-    // Check for food consumption and update score/length
-    int foodType = myPlayer->checkFoodConsumption();
+    int foodType = myPlayer->checkFoodConsumption();    // eat food length score
+
     switch (foodType) {
         case 0:  // Regular food
             myFood->generateFood(myPlayer->getPlayerPos());
             myGameMechs->incrementScore();
             break;
 
-        case 1:  // Good bonus
+        case 1:  // Good food
             myFood->generateFood(myPlayer->getPlayerPos());
             for (int i = 0; i < 10; i++) {
                 myGameMechs->incrementScore();
             }
             break;
 
-        case 2:  // Bad bonus
+        case 2:  // Bad food
             myFood->generateFood(myPlayer->getPlayerPos());
             for (int j = 0; j < 5; j++) {
                 myPlayer->increasePlayerLength();
@@ -133,17 +134,15 @@ void DrawScreen(void)
         {
             if (i == 0 || i == myGameMechs->getBoardSizeY() - 1 || j == 0 || j == myGameMechs->getBoardSizeX() - 1)
             {
-                cout << "#";
+                cout << "#";//////
             }
             else
             {
-                // Check if the current position corresponds to the player, food, or empty space
-                bool checkPlayerPos = false;
+                bool checkPlayerPos = false;                // Check position player food
                 bool checkFoodPos = false;
-                int k; // Declare k here
+                int k;
 
-                // Check player position
-                for (k = 0; k < tempPlayerPosList->getSize(); k++)
+                for (k = 0; k < tempPlayerPosList->getSize(); k++)//playrt pos
                 {
                     objPos tempPos;
                     tempPlayerPosList->getElement(tempPos, k);
@@ -154,8 +153,8 @@ void DrawScreen(void)
                     }
                 }
 
-                // Check food positions
-                for (k = 0; k < foodPosList->getSize(); k++)
+                for (k = 0; k < foodPosList->getSize(); k++)    // food pos
+
                 {
                     objPos tempPos;
                     foodPosList->getElement(tempPos, k);
@@ -166,28 +165,26 @@ void DrawScreen(void)
                     }
                 }
 
-                // Draw player ('*') or food ('0') or empty space (' ')
                 if (checkPlayerPos)
                 {
-                    cout << "*";
+                    cout << "*"; //palyer head?
                 }
                 else if (checkFoodPos)
                 {
                     objPos tempPos;
                     foodPosList->getElement(tempPos, k);
                     
-                    // Check the symbol of the food
-                    if (tempPos.symbol == '0')
+                    if (tempPos.symbol == '0')    
                     {
-                        cout << "0";  // Regular food
+                        cout << "0";  // regular food
                     }
                     else if (tempPos.symbol == 'g')
                     {
-                        cout << "g";  // Good bonus
+                        cout << "g";  // good bonus
                     }
                     else if (tempPos.symbol == 'b')
                     {
-                        cout << "b";  // Bad bonus
+                        cout << "b";  // bad bonus
                     }
                 }
                 else
@@ -198,11 +195,10 @@ void DrawScreen(void)
             }
         }
 
-        // Move to the next line after each row
-        cout << endl;
+        cout << endl;   //change line
     }
 
-    // Display score
+    // Display info
     cout << "Score: " << myGameMechs->getScore() << endl;
     cout << "============================================" << endl;
     cout << "'b' for punishment increase length\n'g' for bonus increase score\n'0' for normal"<<endl;
@@ -236,17 +232,7 @@ void CleanUp(void)
         MacUILib_uninit();
     }
 
-    // if(myGameMechs -> getLoseFlagStatus())
-    // {
-    //     MacUILib_printf("Final Score:%d\n",myGameMechs -> getScore());
-    //     MacUILib_printf("Game Over! You lose\n");
-    //     MacUILib_uninit();
-    // }
 
-    // else
-    // {
-    //     MacUILib_uninit();
-    // }
     delete myGameMechs;
     delete myPlayer;
     delete myFood;

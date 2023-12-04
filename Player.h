@@ -16,7 +16,7 @@ class Player
     // You will include more data members and member functions to complete your design.
 
     public:
-        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
+        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // direction for switch
 
         Player(GameMechs* thisGMRef, Food *thisFood);
         ~Player();

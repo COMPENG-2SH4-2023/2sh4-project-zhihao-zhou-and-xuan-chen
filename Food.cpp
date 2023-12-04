@@ -6,7 +6,6 @@ Food::Food()
 }
 
 
-
 Food::~Food()
 {
     delete foodBucket;
@@ -21,7 +20,7 @@ void Food::generateFood(objPosArrayList* blockOff)
     const int totalBonusFoodCount = 2;
     int bonusFoodCount = 0;
 
-    // Clear existing foodBucket
+    
     while (foodBucket->getSize() > 0)
     {
         objPos removedPos;
@@ -31,12 +30,12 @@ void Food::generateFood(objPosArrayList* blockOff)
     while (generatedCount < totalFoodCount)
     {
         objPos randPos;
-        char symbol = '0'; // Default to regular food symbol '0'
+        char symbol = '0'; // regular food '0'
 
         randPos.setObjPos((rand() % (foodGameMechs.getBoardSizeX() - 2)) + 1,
                           (rand() % (foodGameMechs.getBoardSizeY() - 2)) + 1, symbol);
 
-        // Check if randPos is in blockOff
+        
         bool positionOccupied = false;
 
         for (int i = 0; i < blockOff->getSize(); i++)
@@ -44,7 +43,7 @@ void Food::generateFood(objPosArrayList* blockOff)
             objPos blockPos;
             blockOff->getElement(blockPos, i);
 
-            if (randPos.x == blockPos.x && randPos.y == blockPos.y)
+            if (randPos.x == blockPos.x && randPos.y == blockPos.y)// Check position snake vs food '0'
             {
                 positionOccupied = true;
                 break;
@@ -63,16 +62,16 @@ void Food::generateFood(objPosArrayList* blockOff)
         objPos randPos;
         char symbol;
 
-        // Randomly decide if it's a good bonus or bad bonus
+        // Randomly decide  good  or bad 
         bool isGoodBonus = rand() % 2 == 0;
 
         if (isGoodBonus)
         {
-            symbol = 'g'; // Good bonus symbol 'g'
+            symbol = 'g'; // Good bonus'g'
         }
         else
         {
-            symbol = 'b'; // Bad bonus symbol 'b'
+            symbol = 'b'; // Bad bonus 'b'
         }
 
         randPos.setObjPos((rand() % (foodGameMechs.getBoardSizeX() - 2)) + 1,
@@ -86,7 +85,7 @@ void Food::generateFood(objPosArrayList* blockOff)
             objPos blockPos;
             blockOff->getElement(blockPos, i);
 
-            if (randPos.x == blockPos.x && randPos.y == blockPos.y)
+            if (randPos.x == blockPos.x && randPos.y == blockPos.y) //snake vs 'g' 'b'
             {
                 positionOccupied = true;
                 break;
@@ -100,13 +99,6 @@ void Food::generateFood(objPosArrayList* blockOff)
         }
     }
 }
-
-
-
-
-
-
-
 
 
 objPosArrayList* Food::getFoodPos()

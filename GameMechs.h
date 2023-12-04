@@ -27,8 +27,7 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
         //
-        objPos foodPos;//food position
-        objPosArrayList snake;//??
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
