@@ -34,7 +34,7 @@ bool GameMechs::getExitFlagStatus()
 
 bool GameMechs::getLoseFlagStatus()//lose
 {
-    return loseFlag;
+    return loseFlag;///????
 }
 
 char GameMechs::getInput()
@@ -58,7 +58,7 @@ int GameMechs::getBoardSizeY()
 
 void GameMechs::setLoseTrue()
 {
-    loseFlag = true;
+    loseFlag = true;/////???
 }
 
 void GameMechs::setExitTrue()

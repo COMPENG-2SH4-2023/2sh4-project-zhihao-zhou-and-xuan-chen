@@ -22,8 +22,8 @@ class GameMechs
         char input;
         bool exitFlag;
         
-        bool loseFlag;//for lose the game
-        int score;//for score
+        bool loseFlag;//lose the game????end? ' ',loose???
+        int score;// score
         int boardSizeX;
         int boardSizeY;
         //
@@ -43,8 +43,8 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();      
-        int getScore();//score
-        void incrementScore();
+        int getScore();//score int
+        void incrementScore();//do increase job
 
 
 

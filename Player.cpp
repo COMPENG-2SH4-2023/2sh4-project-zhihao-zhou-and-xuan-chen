@@ -156,15 +156,15 @@ int Player::checkFoodConsumption()
             // Consume the food
             playerPosList->insertHead(foodPos);
 
-            // Generate new food
+            // new food
             //food->generateFood(playerPosList);
 
-            // Return the type of consumed food
+            // Return number for switch
             return (foodPos.symbol == '0') ? 0 : ((foodPos.symbol == 'g') ? 1 : 2);
         }
     }
 
-    return -1; // No food consumed
+    return -1; // No food eaten
 }
 
 
@@ -201,8 +201,7 @@ int Player::checkSelfCollision()
 
         if (headPos.x == bodyPos.x && headPos.y == bodyPos.y) //head vs each body
         {
-            // Collision detected
-            return 1;
+            return 1; // Collision 
         }
     }
 

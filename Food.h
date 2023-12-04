@@ -14,9 +14,9 @@ class Food
 
     public:
     Food();
-    ~Food();
+    ~Food();//?
     void generateFood(objPosArrayList* blockOff);
-    objPosArrayList* getFoodPos();
+    objPosArrayList* getFoodPos();///
 
 };
 

@@ -2,7 +2,7 @@
 
 Food::Food()
 {
-    foodBucket = new objPosArrayList();
+    foodBucket = new objPosArrayList();//new delete
 }
 
 
